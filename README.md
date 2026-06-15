@@ -1,5 +1,4 @@
 # Daily Habit Tracker
-What it does — 2 lines max
 
 ## Features
 - Tracks Fajr, Quran, workout, Python study, daily thought
