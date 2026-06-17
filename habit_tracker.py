@@ -11,7 +11,7 @@ def view_history():
 
 def habit_check():          # Creating an user defined function
     current_date = datetime.datetime.now()
-    habit_dict = {}         # Creaing dictionary
+    habit_dict = {}         # Creating dictionary
 
     # Taking inputs and adding them to dictionary
     try:
