@@ -61,10 +61,10 @@ def habit_check():          # Creating an user defined function
             file.write("---\n")
 
 def choice():
-    print("Welcome to our Digital habit tracker...\n")          # Welcome message
+    print("Welcome to our Digital habit tracker...")          # Welcome message
     while True:
         try:
-            print("1. Log today\n2. View history\n3. Exit")
+            print("\n1. Log today\n2. View history\n3. View stats\n4. Exit")
             user_choice = int(input("Please select an option from above given options: "))
         except ValueError:
             print("Please enter the option in integer form only.")
@@ -75,9 +75,61 @@ def choice():
             elif user_choice == 2:
                 view_history()
             elif user_choice == 3:
+                view_stats()
+            elif user_choice == 4:
                 print("Have a nice day, keep going on...")
                 break
             else:
                 print("Please select a valid option only.")
+
+
+def view_stats():
+    try:
+        with open('habit_log.txt', 'r', encoding='utf-8') as file:
+            content = file.read().split('---')
+            fajr_count = 0
+            workout_count = 0
+            quran_minutes = 0
+            python_minutes = 0
+            for day in content:
+                activities = day.split('\n')
+                # Yes or No
+                for activity in activities:
+                    if 'Fajr namaz: ✅' in activity:
+                        fajr_count += 1
+                    elif 'Workout: ✅' in activity:
+                        workout_count += 1
+                    elif 'Quran' in activity:
+                        words = activity.split()
+                        quran_minutes += int(words[5])
+                    elif 'Python' in activity:
+                        words = activity.split()
+                        python_minutes += int(words[5])
+
+            total_days = len(content) - 1
+            avg_quran_mins = round(quran_minutes / total_days, 1)
+            avg_python_mins = round(python_minutes / total_days, 1)
+    except FileNotFoundError:
+            print("There is no history, log you first day.")
+    except ZeroDivisionError:
+         print("No history exists, log your first day")
+    else:
+            if total_days == 1:
+                print(f"You showed up for {total_days} day")
+            else:
+                print(f"You showed up for {total_days} days")        
+
+            if fajr_count == 1:
+                print(f"You prayed Fajr for {fajr_count} day")
+            else:
+                print(f"You prayed Fajr for {fajr_count} days")
+
+            if workout_count == 1:
+                print(f"You did workout for {workout_count} day")
+            else:
+                print(f"You did workout for {workout_count} days")   
+
+            print(f"You read Quran for {avg_quran_mins} mins/day")             
+            print(f"You worked on Python for {avg_python_mins} mins/day")             
 
 choice()
